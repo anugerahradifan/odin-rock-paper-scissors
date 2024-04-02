@@ -1,96 +1,107 @@
-function getComputerChoice() {
+function getcomputerSelection() {
     let randNum = Math.floor(Math.random() * 3);
     let guess;
     switch (randNum) {
         case 0:
-            guess = "rock";
+            guess = "✊";
             break;
         case 1:
-            guess = "paper"
+            guess = "✋"
             break;
         case 2:
-            guess = "scissor"
+            guess = "✌️"
             break;
     }
     return guess;
 }
 
-function playRound() {
-    let playerSelection = prompt('Choose Rock, Paper, or Scissor').toLowerCase();
-    let computerSelection = getComputerChoice();
-    let messageResult;
-    let result;
+function playRound(playerSelection) {
+    let computerSelection = getcomputerSelection();
+    let resultMessage = document.querySelector('.first-section .first-container');
+    let playerScore = document.querySelector('.first-section .score-container .score-box .score#player');
+    let cpuScore = document.querySelector('.first-section .score-container .score-box .score#cpu');
+    let playerSign = document.querySelector('.first-section .score-container .score-box .selection#player');
+    let cpuSign = document.querySelector('.first-section .score-container .score-box .selection#cpu');
+
     if (playerSelection == computerSelection){
-        messageResult = `Draw! You both chose ${playerSelection}`;
-    } else if (playerSelection == 'rock' && computerSelection == 'paper') {
-        messageResult = 'You lose! Paper beats rock';
-        result = 0;
-    } else if (playerSelection == 'rock' && computerSelection == 'scissor') {
-        messageResult = 'You win! Rock beats scissor';
-        result = 1;
-    } else if (playerSelection == 'paper' && computerSelection == 'scissor') {
-        messageResult = 'You lose! Scissor beats paper';
-        result = 0;
-    } else if (playerSelection == 'paper' && computerSelection == 'rock') {
-        messageResult = 'You win! Paper beats rock';
-        result = 1;
-    } else if (playerSelection == 'scissor' && computerSelection == 'rock') {
-        messageResult = 'You lose! Rock beats scissor';
-        result = 0;
-    } else if (playerSelection == 'scissor' && computerSelection == 'paper') {
-        messageResult = 'You win! Scissor beats paper';
-        result = 1;
+        resultMessage.textContent = `Draw!`;
+    } else if (playerSelection == '✊' && computerSelection == '✋') {
+        resultMessage.textContent = 'You lost! Paper beats rock';
+        tempCpuScore++;
+    } else if (playerSelection == '✊' && computerSelection == '✌️') {
+        resultMessage.textContent = 'You won! Rock beats scissor';
+        tempPlayerScore++;
+    } else if (playerSelection == '✋' && computerSelection == '✌️') {
+        resultMessage.textContent = 'You lost! Scissor beats paper';
+        tempCpuScore++;
+    } else if (playerSelection == '✋' && computerSelection == '✊') {
+        resultMessage.textContent = 'You won! Paper beats rock';
+        tempPlayerScore++;
+    } else if (playerSelection == '✌️' && computerSelection == '✊') {
+        resultMessage.textContent = 'You lost! Rock beats scissor';
+        tempCpuScore++;
+    } else if (playerSelection == '✌️' && computerSelection == '✋') {
+        resultMessage.textContent = 'You won! Scissor beats paper';
+        tempPlayerScore++;
     }
-    console.log(messageResult)
-    return result;
+
+    playerSign.textContent = playerSelection;
+    cpuSign.textContent = computerSelection;
+
+    playerScore.textContent = `Player: ${tempPlayerScore}`;
+    cpuScore.textContent = `CPU: ${tempCpuScore}`;
+
+    let newButton = document.createElement("button");
+    let container = document.querySelector('.first-section .main-container');
+    newButton.id = 'reset';
+    newButton.textContent = 'Play Again';
+    newButton.addEventListener('click', function (e) {
+        tempPlayerScore = 0;
+        tempCpuScore = 0;
+        resultMessage.textContent = 'Get ready!';
+        playerSign.textContent = '❓';
+        cpuSign.textContent = '❓';
+        playerScore.textContent = `Player: ${tempPlayerScore}`;
+        cpuScore.textContent = `CPU: ${tempCpuScore}`;
+        container.removeChild(newButton);
+    })
+
+    if (tempCpuScore == 5 || tempPlayerScore == 5) {
+        container.appendChild(newButton);
+        // let selectionContainer = document.querySelector('.selection-container');
+        // container.removeChild(selectionContainer);
+        if (tempCpuScore == 5) {
+            resultMessage.textContent = 'You lost the game!';
+        } else if (tempPlayerScore == 5) {
+            resultMessage.textContent = 'You won the game!'
+        }
+    }
 }
 
-function playGame() {
-    let playerScore = 0;
-    let computerScore = 0;
+let tempPlayerScore = 0;
+let tempCpuScore = 0;
 
-    result = playRound();
-    if (result == 1) {
-        playerScore += 1;
-    } else if (result == 0) {
-        computerScore += 1;
-    };
+let buttons = document.querySelector('#buttons');
+buttons.addEventListener('click', function (e) {
+    let target = e.target;
+    if (tempPlayerScore < 5 && tempCpuScore < 5) {
+        switch (target.id) {
+            case 'rock':
+                console.log('Rock!');
+                playRound('✊');
+                break;
+            
+            case 'paper':
+                console.log('Paper!');
+                playRound('✋');
+                break;
 
-    result = playRound();
-    if (result == 1) {
-        playerScore += 1;
-    } else if (result == 0) {
-        computerScore += 1;
-    };
-
-    result = playRound();
-    if (result == 1) {
-        playerScore += 1;
-    } else if (result == 0) {
-        computerScore += 1;
-    };
-
-    result = playRound();
-    if (result == 1) {
-        playerScore += 1;
-    } else if (result == 0) {
-        computerScore += 1;
-    };
-
-    result = playRound();
-    if (result == 1) {
-        playerScore += 1;
-    } else if (result == 0) {
-        computerScore += 1;
-    };
-
-    if (playerScore > computerScore) {
-        result = `You win! You beat computer ${playerScore} times!`;
-    } else if (playerScore < computerScore) {
-        result = `You lose! Computer beats you ${computerScore} times!`;
-    } else {
-        result = `Draw! You both win ${playerScore} times!`;
+            case 'scissor':
+                console.log('Scissor!');
+                playRound('✌️');
+                break;
+        }
     }
-    console.log(result);
 }
-playGame();
+)
+

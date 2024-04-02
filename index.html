@@ -4,8 +4,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rock Paper Scissor</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div class="header">
+        <div class="main-container">
+            <div class="title">Rock Paper Scissor</div>
+        </div>
+    </div>
+    <div class="first-section">
+        <div class="main-container">
+            <div class="first-container">
+                Get ready!
+            </div>
+            <div class="second-container">
+                First to reach 5 points wins!
+            </div>
+
+            <div class="score-container">
+                <div class="score-box">
+                    <div class="selection" id="player">❓</div>
+                    <div class="score" id="player">Player: 0</div>
+                </div>
+                <div class="score-box">
+                    <div class="selection" id="cpu">❓</div>
+                    <div class="score" id="cpu">CPU: 0</div>
+                </div>
+            </div>
+            <div class="selection-container">
+                <div id="buttons">
+                    <button id="rock">✊</button>
+                    <button id="paper">✋</button>
+                    <button id="scissor">✌️</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <script src="script.js"></script>
 </body>
 </html>
